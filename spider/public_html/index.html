@@ -5,28 +5,11 @@
         <title> Réaliser un triangle avec canvas.</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="spider.js"></script>
     </head>
     <body>
         <h1> dessiner un rectangle avec canvas</h1>
-    <canvas id="pointeur" width="1000" height="1000">
-</canvas>
-<script type="text/javascript">
+    <canvas id="pointeur" width="1000" height="1000"></canvas>
 
-function rectangle()
-{
-  var canvas = document.getElementById("pointeur"); 
-  var context = canvas.getContext("2d");
-  context.beginPath();
-  context.strokeStyle="blue";  
-   context.fillStyle="red";
-  context.lineWidth="2";   
-  context.rect(500,100,300,150);
-  context.stroke();
-  context.fill();
-}
-
-window.onload=rectangle;
-</script>   
-        
-    </body>
+     </body>
 </html>
