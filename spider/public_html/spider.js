@@ -16,13 +16,13 @@ function pentagone()
         norm_y[i] = Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides);
     }
 
-    // patient's coefficient
+    // patient's coefficientsss
     let coefficients = [0.8, 0.5, 0.9, 0.7, 0.9];
 
     // patient COORDINATES IN A LOOP
     let target_x = [];
     let target_y = [];
-    for (let i = 0; i < numberOfSides; i += 1) {
+    for (let i = 0; i < numberOfSides; i += 1){
         target_x[i] = coefficients[i] * (norm_x[i] - Xcenter) + Xcenter;
         target_y[i] = coefficients[i] * (norm_y[i] - Ycenter) + Ycenter;
     }
@@ -57,3 +57,4 @@ function pentagone()
 }
 
 window.onload = pentagone;
+
