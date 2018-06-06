@@ -1,9 +1,12 @@
-function pentagone()
-{
-    let canvas = document.getElementById("pointeur");
-    let context = canvas.getContext("2d");
+function SpiderChart(canvas, coefficients) {
+    this.canvas = canvas;
+    this.coefficients = coefficients;
+}
 
-    let numberOfSides = 5;
+SpiderChart.prototype.display = function () {
+    let context = this.canvas.getContext("2d");
+    
+    let numberOfSides = coefficients.length;
     let size = 200;
     let Xcenter = 205;
     let Ycenter = 205;
@@ -16,20 +19,17 @@ function pentagone()
         norm_y[i] = Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides);
     }
 
-    // patient's coefficientsss
-    let coefficients = [0.8, 0.5, 0.9, 0.7, 0.9];
-
-    // patient COORDINATES IN A LOOP
+    // Compute target coordinates
     let target_x = [];
     let target_y = [];
-    for (let i = 0; i < numberOfSides; i += 1){
-        target_x[i] = coefficients[i] * (norm_x[i] - Xcenter) + Xcenter;
-        target_y[i] = coefficients[i] * (norm_y[i] - Ycenter) + Ycenter;
+    for (let i = 0; i < numberOfSides; i += 1) {
+        target_x[i] = this.coefficients[i] * (norm_x[i] - Xcenter) + Xcenter;
+        target_y[i] = this.coefficients[i] * (norm_y[i] - Ycenter) + Ycenter;
     }
     target_x[numberOfSides] = target_x[0];
     target_y[numberOfSides] = target_y[0];
 
-    // Draw pentagon of norms
+    // Draw polygon of norms
     context.beginPath();
     context.moveTo(norm_x[0], norm_y[0]);
     for (let i = 1; i <= numberOfSides; i += 1) {
@@ -39,7 +39,7 @@ function pentagone()
     context.lineWidth = 1;
     context.stroke();
 
-    // Draw pentagon of patient
+    // Draw polygon of target
     context.beginPath();
     context.moveTo(target_x[0], target_y[0]);
     for (let i = 1; i <= numberOfSides; i += 1) {
@@ -54,7 +54,4 @@ function pentagone()
     context.fillStyle = "black";
     context.arc(Xcenter, Ycenter, 2, 0, 2 * Math.PI);
     context.fill();
-}
-
-window.onload = pentagone;
-
+};
