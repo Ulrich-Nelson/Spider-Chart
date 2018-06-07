@@ -5,8 +5,8 @@ function SpiderChart(canvas, coefficients) {
 
 SpiderChart.prototype.display = function () {
     let context = this.canvas.getContext("2d");
-    
-    let numberOfSides = coefficients.length;
+
+    let numberOfSides = this.coefficients.length;
     let size = 200;
     let Xcenter = 205;
     let Ycenter = 205;
