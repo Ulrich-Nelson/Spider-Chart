@@ -8,12 +8,13 @@
         <script src="spider.js"></script>
     </head>
     <body>
-        <h1>Draw pentagon</h1>
+        <h1>Draw spider chart</h1>
         <canvas id="canvas"  width="1000" height="1000"></canvas>
         <script>
             let canvas = document.getElementById("canvas");
+            let labels = ['shimp', 'himp', 'imc', 'vibrator', 'strength', 'steps', 'pulse'];
             let coefficients = [0.8, 0.5, 0.9, 0.7, 0.9, 0.1, 0.7];
-            let spiderChart = new SpiderChart(canvas, coefficients);
+            let spiderChart = new SpiderChart(canvas, labels, coefficients);
             spiderChart.display();
         </script>
     </body>
