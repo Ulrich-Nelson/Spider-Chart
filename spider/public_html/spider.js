@@ -15,15 +15,16 @@ SpiderChart.prototype.display = function () {
     let labelExtent = 10;
 
     // Compute label coordinates
-    labels = this.computePolygon(numberOfSides, labelExtent + radius);
+    let labels = this.computePolygon(numberOfSides, labelExtent + radius);
 
     // Compute norm coordinates
-    norms = this.computePolygon(numberOfSides, radius, true);
+    let norms = this.computePolygon(numberOfSides, radius, true);
 
     // Compute interior polygons
-    first = this.computePolygon(numberOfSides, interiorRatios[0] * radius, true);
-    second = this.computePolygon(numberOfSides, interiorRatios[1] * radius, true);
-    third = this.computePolygon(numberOfSides, interiorRatios[2] * radius, true);
+    // tab interiorPolygons = []
+    let first = this.computePolygon(numberOfSides, interiorRatios[0] * radius, true);
+    let second = this.computePolygon(numberOfSides, interiorRatios[1] * radius, true);
+    let third = this.computePolygon(numberOfSides, interiorRatios[2] * radius, true);
 
     // Compute target coordinates
     let target_x = [];
