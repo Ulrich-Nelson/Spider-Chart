@@ -21,10 +21,10 @@ SpiderChart.prototype.display = function () {
     let norms = this.computePolygon(numberOfSides, radius, true);
 
     // Compute interior polygons
-    // tab interiorPolygons = []
-    let first = this.computePolygon(numberOfSides, interiorRatios[0] * radius, true);
-    let second = this.computePolygon(numberOfSides, interiorRatios[1] * radius, true);
-    let third = this.computePolygon(numberOfSides, interiorRatios[2] * radius, true);
+    let  interiorPolygons = [];
+    for (let i = 0; i < this.interiorRatios.length; i += 1) {
+        interiorPolygons [i] = this.computePolygon(numberOfSides, interiorRatios[i] * radius, true);
+    }
 
     // Compute target coordinates
     let target_x = [];
@@ -59,9 +59,10 @@ SpiderChart.prototype.display = function () {
     }
 
     // Draw interior polygons
-    this.drawPolygon(context, numberOfSides, first.x, first.y, "black", 1);
-    this.drawPolygon(context, numberOfSides, second.x, second.y, "black", 1);
-    this.drawPolygon(context, numberOfSides, third.x, third.y, "black", 1);
+    
+    for (let i= 0; i < interiorPolygons.length; i += 1) {
+        this.drawPolygon(context, numberOfSides, interiorPolygons [i].x,interiorPolygons[i].y, "black", 1);
+    }
 };
 
 SpiderChart.prototype.computePolygon = function (n, radius, closed = false) {
