@@ -59,9 +59,8 @@ SpiderChart.prototype.display = function () {
     }
 
     // Draw interior polygons
-    
-    for (let i= 0; i < interiorPolygons.length; i += 1) {
-        this.drawPolygon(context, numberOfSides, interiorPolygons [i].x,interiorPolygons[i].y, "black", 1);
+    for (let i = 0; i < interiorPolygons.length; i += 1) {
+        this.drawPolygon(context, numberOfSides, interiorPolygons [i].x, interiorPolygons[i].y, "black", 1);
     }
 };
 
