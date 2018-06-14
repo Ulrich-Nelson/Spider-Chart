@@ -1,7 +1,7 @@
-function SpiderChart(canvas, labels, coefficients, interiorRatios) {
+function SpiderChart(canvas, labels, targets, interiorRatios) {
     this.canvas = canvas;
     this.labels = labels;
-    this.coefficients = coefficients;
+    this.coefficients = targets[0].coefficients;
     this.interiorRatios = interiorRatios;
     this.centerX = 300;
     this.centerY = 300;
@@ -23,24 +23,34 @@ SpiderChart.prototype.display = function () {
     // Compute interior polygons
     let  interiorPolygons = [];
     for (let i = 0; i < this.interiorRatios.length; i += 1) {
-        interiorPolygons [i] = this.computePolygon(numberOfSides, interiorRatios[i] * radius, true);
+        interiorPolygons[i] = this.computePolygon(numberOfSides, interiorRatios[i] * radius, true);
     }
 
     // Compute target coordinates
-    let target_x = [];
-    let target_y = [];
-    for (let i = 0; i < numberOfSides; i += 1) {
-        target_x[i] = this.coefficients[i] * (norms.x[i] - this.centerX) + this.centerX;
-        target_y[i] = this.coefficients[i] * (norms.y[i] - this.centerY) + this.centerY;
-    }
-    target_x[numberOfSides] = target_x[0];
-    target_y[numberOfSides] = target_y[0];
+    /* let target_x = [];
+     let target_y = [];
+     for (let i = 0; i < numberOfSides; i += 1) {
+     target_x[i] = this.coefficients[i] * (norms.x[i] - this.centerX) + this.centerX;
+     target_y[i] = this.coefficients[i] * (norms.y[i] - this.centerY) + this.centerY;
+     }
+     target_x[numberOfSides] = target_x[0];
+     target_y[numberOfSides] = target_y[0]; */
 
+    //Computer target coordinates
+    let target = {x: [], y: []};
+    for ( let k = 0; k < this.coefficients[k].length; k += 1)    
+    for (let i = 0; i < numberOfSides; i += 1) {
+        target.x[i] = this.coefficients[i] * (norms.x[i] - this.centerX) + this.centerX;
+        target.y[i] = this.coefficients[i] * (norms.y[i] - this.centerY) + this.centerY;
+    }
+    target.x[numberOfSides] = target.x[0];
+    target.y[numberOfSides] = target.y[0];
+    
     // Draw polygon of norms
     this.drawPolygon(context, numberOfSides, norms.x, norms.y, "black", 2);
 
     // Draw polygon of target
-    this.drawPolygon(context, numberOfSides, target_x, target_y, "red", 1);
+    this.drawPolygon(context, numberOfSides, target.x, target.y, "red", 1);
 
     // Draw center
     context.beginPath();
