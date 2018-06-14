@@ -38,14 +38,13 @@ SpiderChart.prototype.display = function () {
 
     //Computer target coordinates
     let target = {x: [], y: []};
-    for ( let k = 0; k < this.coefficients[k].length; k += 1)    
     for (let i = 0; i < numberOfSides; i += 1) {
         target.x[i] = this.coefficients[i] * (norms.x[i] - this.centerX) + this.centerX;
         target.y[i] = this.coefficients[i] * (norms.y[i] - this.centerY) + this.centerY;
     }
     target.x[numberOfSides] = target.x[0];
     target.y[numberOfSides] = target.y[0];
-    
+
     // Draw polygon of norms
     this.drawPolygon(context, numberOfSides, norms.x, norms.y, "black", 2);
 
