@@ -2,6 +2,7 @@ function SpiderChart(canvas, labels, targets, interiorRatios) {
     this.canvas = canvas;
     this.labels = labels;
     this.coefficients = targets[0].coefficients;
+    this.numberOfSides = this.coefficients.length;
     this.interiorRatios = interiorRatios;
     this.centerX = 300;
     this.centerY = 300;
@@ -9,21 +10,19 @@ function SpiderChart(canvas, labels, targets, interiorRatios) {
 
 SpiderChart.prototype.display = function () {
     let context = this.canvas.getContext("2d");
-
-    let numberOfSides = this.coefficients.length;
     let radius = 200;
     let labelExtent = 10;
 
     // Compute label coordinates
-    let labels = this.computePolygon(numberOfSides, labelExtent + radius);
+    let labels = this.computePolygon(this.numberOfSides, labelExtent + radius);
 
     // Compute norm coordinates
-    let norms = this.computePolygon(numberOfSides, radius, true);
+    let norms = this.computePolygon(this.numberOfSides, radius, true);
 
     // Compute interior polygons
     let  interiorPolygons = [];
     for (let i = 0; i < this.interiorRatios.length; i += 1) {
-        interiorPolygons[i] = this.computePolygon(numberOfSides, interiorRatios[i] * radius, true);
+        interiorPolygons[i] = this.computePolygon(this.numberOfSides, interiorRatios[i] * radius, true);
     }
 
     // Compute target coordinates
@@ -37,19 +36,20 @@ SpiderChart.prototype.display = function () {
      target_y[numberOfSides] = target_y[0]; */
 
     //Computer target coordinates
+
     let target = {x: [], y: []};
-    for (let i = 0; i < numberOfSides; i += 1) {
+    for (let i = 0; i < this.numberOfSides; i += 1) {
         target.x[i] = this.coefficients[i] * (norms.x[i] - this.centerX) + this.centerX;
         target.y[i] = this.coefficients[i] * (norms.y[i] - this.centerY) + this.centerY;
     }
-    target.x[numberOfSides] = target.x[0];
-    target.y[numberOfSides] = target.y[0];
+    target.x[this.numberOfSides] = target.x[0];
+    target.y[this.numberOfSides] = target.y[0];
 
     // Draw polygon of norms
-    this.drawPolygon(context, numberOfSides, norms.x, norms.y, "black", 2);
+    this.drawPolygon(context, this.numberOfSides, norms.x, norms.y, "black", 2);
 
     // Draw polygon of target
-    this.drawPolygon(context, numberOfSides, target.x, target.y, "red", 1);
+    this.drawPolygon(context, this.numberOfSides, target.x, target.y, "red", 1);
 
     // Draw center
     context.beginPath();
@@ -62,14 +62,14 @@ SpiderChart.prototype.display = function () {
     context.font = "20px Arial";
     context.textBaseline = "middle";
     context.fillStyle = "MediumBlue";
-    for (let i = 0; i < numberOfSides; i += 1) {
+    for (let i = 0; i < this.numberOfSides; i += 1) {
         context.textAlign = labels.x[i] < this.centerX ? "right" : "left";
         context.fillText(this.labels[i], labels.x[i], labels.y[i]);
     }
 
     // Draw interior polygons
     for (let i = 0; i < interiorPolygons.length; i += 1) {
-        this.drawPolygon(context, numberOfSides, interiorPolygons [i].x, interiorPolygons[i].y, "black", 1);
+        this.drawPolygon(context, this.numberOfSides, interiorPolygons [i].x, interiorPolygons[i].y, "black", 1);
     }
 };
 
