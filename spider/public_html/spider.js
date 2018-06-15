@@ -1,8 +1,8 @@
 function SpiderChart(canvas, labels, targets, interiorRatios) {
     this.canvas = canvas;
     this.labels = labels;
-    this.coefficients = targets[0].coefficients;
-    this.numberOfSides = this.coefficients.length;
+    this.targets = targets;
+    this.numberOfSides = this.targets[0].coefficients.length;
     this.interiorRatios = interiorRatios;
     this.centerX = 300;
     this.centerY = 300;
@@ -25,14 +25,22 @@ SpiderChart.prototype.display = function () {
         interiorPolygons[i] = this.computePolygon(this.numberOfSides, interiorRatios[i] * radius, true);
     }
 
-    // Compute target polygon
-    let targetPolygon = this.computeTargetPolygon(this.numberOfSides, normPolygon);
+    // Compute target polygons
+    let targetPolygons = [];
+    for (let i = 0; i < this.targets.length; i += 1) {
+        let targetPolygon = this.computeTargetPolygon(this.numberOfSides, normPolygon, i);
+        targetPolygons.push(targetPolygon);
+    }
 
     // Draw norm polygon
     this.drawPolygon(context, this.numberOfSides, normPolygon.x, normPolygon.y, "black", 2);
 
-    // Draw target polygon
-    this.drawPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, "red", 1);
+    // Draw target polygons
+    for (let i = 0; i < this.targets.length; i += 1) {
+        let targetPolygon = targetPolygons[i];
+        let color = 'red';
+        this.drawPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, color, 1);
+    }
 
     // Draw center
     context.beginPath();
@@ -67,12 +75,12 @@ SpiderChart.prototype.computePolygon = function (n, radius, closed = false) {
     return {x: x, y: y};
 };
 
-SpiderChart.prototype.computeTargetPolygon = function (n, normPolygon) {
+SpiderChart.prototype.computeTargetPolygon = function (n, normPolygon, index) {
     let x = [];
     let y = [];
     for (let i = 0; i < n; i += 1) {
-        x[i] = this.coefficients[i] * (normPolygon.x[i] - this.centerX) + this.centerX;
-        y[i] = this.coefficients[i] * (normPolygon.y[i] - this.centerY) + this.centerY;
+        x[i] = this.targets[index].coefficients[i] * (normPolygon.x[i] - this.centerX) + this.centerX;
+        y[i] = this.targets[index].coefficients[i] * (normPolygon.y[i] - this.centerY) + this.centerY;
     }
     x[n] = x[0];
     y[n] = y[0];
