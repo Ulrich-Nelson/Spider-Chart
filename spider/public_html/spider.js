@@ -38,7 +38,7 @@ SpiderChart.prototype.display = function () {
     // Draw target polygons
     for (let i = 0; i < this.targets.length; i += 1) {
         let targetPolygon = targetPolygons[i];
-        let color = 'red';
+        let color = this.targets[i].color;
         this.drawPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, color, 1);
     }
 
