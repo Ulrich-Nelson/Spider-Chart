@@ -52,7 +52,7 @@ SpiderChart.prototype.display = function () {
     context.beginPath();
     context.font = "20px Arial";
     context.textBaseline = "middle";
-    context.fillStyle = "MediumBlue";
+    context.fillStyle = "DarkBlue";
     for (let i = 0; i < this.numberOfSides; i += 1) {
         context.textAlign = labelPolygon.x[i] < this.centerX ? "right" : "left";
         context.fillText(this.labels[i], labelPolygon.x[i], labelPolygon.y[i]);
