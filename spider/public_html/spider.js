@@ -4,25 +4,25 @@ function SpiderChart(canvas, labels, targets, interiorRatios) {
     this.targets = targets;
     this.numberOfSides = this.targets[0].coefficients.length;
     this.interiorRatios = interiorRatios;
-    this.centerX = 300;
-    this.centerY = 300;
+    this.centerX = canvas.width / 2;
+    this.centerY = canvas.height / 2;
+    this.radius = Math.min(this.centerX * 0.9, this.centerY * 0.9);
 }
 
 SpiderChart.prototype.display = function () {
     let context = this.canvas.getContext("2d");
-    let radius = 200;
     let labelExtent = 10;
 
     // Compute label polygon
-    let labelPolygon = this.computePolygon(this.numberOfSides, labelExtent + radius);
+    let labelPolygon = this.computePolygon(this.numberOfSides, labelExtent + this.radius);
 
     // Compute norm polygon
-    let normPolygon = this.computePolygon(this.numberOfSides, radius, true);
+    let normPolygon = this.computePolygon(this.numberOfSides, this.radius, true);
 
     // Compute interior polygons
     let  interiorPolygons = [];
     for (let i = 0; i < this.interiorRatios.length; i += 1) {
-        interiorPolygons[i] = this.computePolygon(this.numberOfSides, interiorRatios[i] * radius, true);
+        interiorPolygons[i] = this.computePolygon(this.numberOfSides, interiorRatios[i] * this.radius, true);
     }
 
     // Compute target polygons
