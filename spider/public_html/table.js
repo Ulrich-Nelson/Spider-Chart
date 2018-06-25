@@ -1,16 +1,20 @@
-// création de la table
+// CREATE TABLE
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('mydb.db');
-db.run('CREATE TABLE Patients(name text)');
+db.run('DROP TABLE [IF EXISTS] Patients');
+db.run('CREATE TABLE Patients(labels TEXT)');
 
- /*inserer des valeurs
-db.run('INSERT INTO Patients'VALUES(name1),(name2),(name3),(name4),(name5),function(err) {
-    if (err){
-        returm console.log(err.message);
+//ADD VALUES
+let labels = ['SHIMP', 'IMC', 'DHI', 'Dépendance Visuelle', 'Proprioception', 'Force Musculaire'];
+let placeholders = labels.map((label) => '(?)').join(',');
+let sql = 'INSERT INTO (Patients) VALUES' + placeholders;
+console.log(sql);
+db.run(sql, labels, function (err) {
+    if (err) {
+        return console.error(err.message);
     }
-    console.log('A row has been inserted with rowid ${this.lastID}');
-});*/
-
+    console.log('Rows inserted ${this.changes}');
+});
 db.close();
 
 
