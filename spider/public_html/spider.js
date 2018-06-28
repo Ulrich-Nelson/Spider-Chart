@@ -19,6 +19,9 @@ SpiderChart.prototype.display = function () {
     // Compute norm polygon
     let normPolygon = this.computePolygon(this.numberOfSides, this.radius, true);
 
+    // Draw Lines
+    this.drawLines(context, this.numberOfSides, normPolygon.x, normPolygon.y, 1);
+
     // Compute interior polygons
     let  interiorPolygons = [];
     for (let i = 0; i < this.interiorRatios.length; i += 1) {
@@ -39,20 +42,27 @@ SpiderChart.prototype.display = function () {
     for (let i = 0; i < this.targets.length; i += 1) {
         let targetPolygon = targetPolygons[i];
         let color = this.targets[i].color;
-        this.drawPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, color, 1);
+        this.fillPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, color, 3);
     }
 
-    // Draw center
+    //Draw center
     context.beginPath();
     context.fillStyle = "black";
     context.arc(this.centerX, this.centerY, 2, 0, 2 * Math.PI);
     context.fill();
 
+    //points sur les sommets des targets 
+    context.beginPath();
+    context.fillStyle = "black";
+    for (let i = 0; i < this.targets.length; i += 1) {
+        let targetPolygon = targetPolygons[i];
+        context.arc(targetPolygon.x, targetPolygon.y, 2, 0, 2 * Math.PI, );
+    }
     // Draw labels
     context.beginPath();
     context.font = "20px Arial";
     context.textBaseline = "middle";
-    context.fillStyle = "DarkBlue";
+    context.fillStyle = "#1222C6";
     for (let i = 0; i < this.numberOfSides; i += 1) {
         context.textAlign = labelPolygon.x[i] < this.centerX ? "right" : "left";
         context.fillText(this.labels[i], labelPolygon.x[i], labelPolygon.y[i]);
@@ -60,9 +70,10 @@ SpiderChart.prototype.display = function () {
 
     // Draw interior polygons
     for (let i = 0; i < interiorPolygons.length; i += 1) {
-        this.drawPolygon(context, this.numberOfSides, interiorPolygons [i].x, interiorPolygons[i].y, "black", 1);
+        this.drawPolygon(context, this.numberOfSides, interiorPolygons [i].x, interiorPolygons[i].y, "#808080", 1);
     }
-};
+}
+;
 
 SpiderChart.prototype.computePolygon = function (n, radius, closed = false) {
     let x = [];
@@ -97,3 +108,37 @@ SpiderChart.prototype.drawPolygon = function (context, n, x, y, color, lineWidth
     context.lineWidth = lineWidth;
     context.stroke();
 };
+
+SpiderChart.prototype.drawLines = function (context, n, x, y, lineWidth) {
+    context.beginPath();
+    for (let i = 0; i < n; i += 1) {
+        context.moveTo(this.centerX, this.centerY);
+        context.lineTo(x[i], y[i]);
+    }
+    context.lineWidth = lineWidth;
+    context.strokeStyle = 'DarkSlateGray';
+    context.stroke();
+};
+
+SpiderChart.prototype.fillPolygon = function (context, n, x, y, color, lineWidth) {
+    context.save();
+    context.beginPath();
+    context.moveTo(x[0], y[0]);
+    for (let i = 1; i <= n; i += 1) {
+        context.lineTo(x[i], y[i]);
+    }
+    context.strokeStyle = color;
+    context.globalAlpha = 0.6;
+    context.lineWidth = lineWidth;
+    context.fillStyle = color;
+    context.fill();
+    context.stroke();
+    context.restore();
+
+
+};
+
+
+
+
+
