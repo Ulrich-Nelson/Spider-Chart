@@ -45,19 +45,29 @@ SpiderChart.prototype.display = function () {
         this.fillPolygon(context, this.numberOfSides, targetPolygon.x, targetPolygon.y, color, 3);
     }
 
-    //Draw center
+    // Draw center
     context.beginPath();
     context.fillStyle = "black";
     context.arc(this.centerX, this.centerY, 2, 0, 2 * Math.PI);
     context.fill();
 
-    //points sur les sommets des targets 
-    context.beginPath();
-    context.fillStyle = "black";
+    // Draw target vertices
     for (let i = 0; i < this.targets.length; i += 1) {
         let targetPolygon = targetPolygons[i];
-        context.arc(targetPolygon.x, targetPolygon.y, 2, 0, 2 * Math.PI, );
+        let color = this.targets[i].color;
+        console.log(color);
+        for (let j = 0; j < color.length; j += 1) {
+            for (let k = 0; k < targetPolygon.x.length; k += 1)
+            {
+                context.beginPath();
+                context.fillStyle = color;
+                context.arc(targetPolygon.x[k], targetPolygon.y[k], 3, 0, 3 * Math.PI);
+                context.fill();
+            }
+        }
     }
+
+
     // Draw labels
     context.beginPath();
     context.font = "20px Arial";
@@ -134,11 +144,7 @@ SpiderChart.prototype.fillPolygon = function (context, n, x, y, color, lineWidth
     context.fill();
     context.stroke();
     context.restore();
-
-
 };
-
-
 
 
 
