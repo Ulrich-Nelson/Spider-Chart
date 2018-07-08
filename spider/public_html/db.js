@@ -31,6 +31,7 @@ try {
             chain(0, function () {
                 db.all("SELECT * FROM Patients;", [], (e, rows) => {
                     console.log(e);
+                    // WARNING: not sure that norm is rows[0] because of internal SQLite storage
                     let norm = [rows[0].shimp, rows[0].imc, rows[0].dhi, rows[0].visual_dependence, rows[0].proprioception];
                     console.log(norm);
                     let targets = [];
