@@ -18,6 +18,7 @@ function query(callback) {
         let norm = [rows[0].shimp, rows[0].imc, rows[0].dhi, rows[0].visual_dependence, rows[0].proprioception];
         let targets = [];
         for (let i = 1; i < rows.length; i++) {
+            // WARNING: not sure that norm is rows[0] because of internal SQLite storage
             let coefficients = [rows[i].shimp / rows[0].shimp, rows[i].imc / rows[0].imc, rows[i].dhi / rows[0].dhi, rows[i].visual_dependence / rows[0].visual_dependence, rows[i].proprioception / rows[0].proprioception];
             let target = {coefficients: coefficients, name: rows[i].id};
             targets.push(target);
