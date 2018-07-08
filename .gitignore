@@ -1,2 +1,6 @@
 /spider/nbproject/private/
-/HTML/JS/nbproject/private/
+/HTML/JS/nbproject/private/spider/node_modules/
+spider/package-lock.json
+spider/package.json
+spider/node_modules
+spider/package.json
