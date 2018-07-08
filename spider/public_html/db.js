@@ -26,7 +26,7 @@ function chain(i, done) {
 try {
     db.run("DROP TABLE IF EXISTS Patients;", {}, function (e) {
         console.log(e);
-        db.run("CREATE TABLE Patients (id TEXT NOT NULL PRIMARY KEY, shimp INTEGER NOT NULL, imc INTEGER NOT NULL, dhi INTEGER NOT NULL, visual_dependence INTEGER NOT NULL, proprioception INTEGER NOT NULL);", {}, function (e) {
+        db.run("CREATE TABLE Patients (id TEXT NOT NULL PRIMARY KEY, shimp REAL NOT NULL, imc REAL NOT NULL, dhi REAL NOT NULL, visual_dependence REAL NOT NULL, proprioception REAL NOT NULL);", {}, function (e) {
             console.log(e);
             chain(0, function () {
                 db.all("SELECT * FROM Patients;", [], (e, rows) => {
